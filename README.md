@@ -1,4 +1,4 @@
-# Cryptography---19CS412-classical-techqniques
+# Cryptography---19CS412-Classical-Techniques
 # Caeser Cipher
 Caeser Cipher using with different key values
 
