@@ -83,6 +83,8 @@ int main() {
 
 ## OUTPUT:
 
+![1](https://github.com/user-attachments/assets/1daf2993-e749-4198-b804-201fe79679c2)
+
 
 ## RESULT:
 The program is executed successfully
@@ -348,6 +350,7 @@ int main() {
 
 ## OUTPUT:
 
+![2](https://github.com/user-attachments/assets/6c3ba944-33d2-4cb1-953f-ada2cf924f38)
 
 
 ## RESULT:
@@ -486,6 +489,8 @@ int main() {
 
 ## OUTPUT:
 
+![3](https://github.com/user-attachments/assets/7454663e-dcbc-4261-82fb-2abcd251e9cb)
+
 
 ## RESULT:
 The program is executed successfully
@@ -600,6 +605,8 @@ void decipher() {
 
 ## OUTPUT:
 
+![4](https://github.com/user-attachments/assets/b1f1afde-62bc-436b-9d92-feb633e31962)
+
 
 ## RESULT:
 The program is executed successfully
@@ -626,61 +633,124 @@ Implementation using C or pyhton code
 ### Step 3:
 
 Testing algorithm with different key values. 
-ALGORITHM DESCRIPTION:
+
+## ALGORITHM DESCRIPTION:
+
 In the rail fence cipher, the plaintext is written downwards and diagonally on successive "rails" of an imaginary fence, then moving up when we reach the bottom rail. When we reach the top rail, the message is written downwards again until the whole plaintext is written out. The message is then read off in rows.
 
 ## PROGRAM:
+```c
+#include <stdio.h>
+#include <string.h>
 
-PROGRAM:
-#include<stdio.h> #include<string.h> #include<stdlib.h> main()
-{
-int i,j,len,rails,count,code[100][1000]; char str[1000];
-printf("Enter a Secret Message\n"); gets(str);
-len=strlen(str);
-printf("Enter number of rails\n"); scanf("%d",&rails); for(i=0;i<rails;i++)
-{
-for(j=0;j<len;j++)
-{
-code[i][j]=0;
-}
-}
-count=0; j=0;
-while(j<len)
-{
-if(count%2==0)
-{
-for(i=0;i<rails;i++)
-{
-//strcpy(code[i][j],str[j]);
-code[i][j]=(int)str[j]; j++;
+void encryptRailFence(char *text, int key, char *cipherText) {
+    int len = strlen(text);
+    int row, col, direction;
+    char rail[key][len];
+
+    // Initializing the rail matrix with null characters
+    for (row = 0; row < key; row++)
+        for (col = 0; col < len; col++)
+            rail[row][col] = '\n';
+
+    // Placing characters in the rail matrix in a zig-zag manner
+    row = 0;
+    direction = 1; // 1 for down, -1 for up
+    for (col = 0; col < len; col++) {
+        rail[row][col] = text[col];
+        if (row == 0)
+            direction = 1;
+        else if (row == key - 1)
+            direction = -1;
+        row += direction;
+    }
+
+    // Reading the matrix row-wise to get the cipher text
+    int index = 0;
+    for (row = 0; row < key; row++) {
+        for (col = 0; col < len; col++) {
+            if (rail[row][col] != '\n') {
+                cipherText[index++] = rail[row][col];
+            }
+        }
+    }
+    cipherText[index] = '\0';
 }
 
-}
-else
-{
- 
-for(i=rails-2;i>0;i--)
-{
-code[i][j]=(int)str[j]; j++;
-}
+void decryptRailFence(char *cipherText, int key, char *plainText) {
+    int len = strlen(cipherText);
+    int row, col, direction;
+    char rail[key][len];
+
+    // Initializing the rail matrix with null characters
+    for (row = 0; row < key; row++)
+        for (col = 0; col < len; col++)
+            rail[row][col] = '\n';
+
+    // Marking the places in the rail matrix where the cipher text characters will go
+    row = 0;
+    direction = 1; // 1 for down, -1 for up
+    for (col = 0; col < len; col++) {
+        rail[row][col] = '*';
+        if (row == 0)
+            direction = 1;
+        else if (row == key - 1)
+            direction = -1;
+        row += direction;
+    }
+
+    // Filling the rail matrix with the cipher text characters
+    int index = 0;
+    for (row = 0; row < key; row++) {
+        for (col = 0; col < len; col++) {
+            if (rail[row][col] == '*' && index < len) {
+                rail[row][col] = cipherText[index++];
+            }
+        }
+    }
+
+    // Reading the matrix in a zig-zag manner to get the plain text
+    row = 0;
+    direction = 1; // 1 for down, -1 for up
+    for (col = 0; col < len; col++) {
+        plainText[col] = rail[row][col];
+        if (row == 0)
+            direction = 1;
+        else if (row == key - 1)
+            direction = -1;
+        row += direction;
+    }
+    plainText[len] = '\0';
 }
 
-count++;
-}
+int main() {
+    char text[100], cipherText[100], plainText[100];
+    int key;
 
-for(i=0;i<rails;i++)
-{
-for(j=0;j<len;j++)
-{
-if(code[i][j]!=0) printf("%c",code[i][j]);
+    // Input the plain text
+    printf("Enter the plain text: ");
+    gets(text);
+
+    // Input the key (number of rails)
+    printf("Enter the key (number of rails): ");
+    scanf("%d", &key);
+
+    // Encrypt the plain text
+    encryptRailFence(text, key, cipherText);
+    printf("Encrypted Text: %s\n", cipherText);
+
+    // Decrypt the cipher text
+    decryptRailFence(cipherText, key, plainText);
+    printf("Decrypted Text: %s\n", plainText);
+
+    return 0;
 }
-}
-printf("\n");
-}
+```
 ## OUTPUT:
-OUTPUT:
-Enter a Secret Message wearediscovered
-Enter number of rails 2
-waeicvrderdsoee
+
+![5](https://github.com/user-attachments/assets/bd80bc09-73b5-4d32-a021-b0a7b4b2b57a)
+
+
 ## RESULT:
-The program is executed successfully
+
+The program is executed successfully.
