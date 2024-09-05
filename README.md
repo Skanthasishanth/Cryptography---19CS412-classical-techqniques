@@ -448,8 +448,12 @@ int main() {
     char dec[1000] = "";
     int n;
 
-    strcpy(msg, "SISHANTH");
-    printf("Input message : %s\n", msg);
+    // Take user input for the message
+    printf("Enter a message to encode: ");
+    fgets(msg, sizeof(msg), stdin);
+    
+    // Remove newline character if present
+    msg[strcspn(msg, "\n")] = 0;
 
     // Convert the input message to uppercase
     for (int i = 0; i < strlen(msg); i++) {
@@ -498,7 +502,7 @@ int main() {
 
 ## OUTPUT:
 
-![3](https://github.com/user-attachments/assets/7454663e-dcbc-4261-82fb-2abcd251e9cb)
+![3](https://github.com/user-attachments/assets/c04b1933-f9e7-4cc5-9540-570397c4af11)
 
 
 ## RESULT:
