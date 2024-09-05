@@ -135,6 +135,7 @@ To decrypt, use the INVERSE (opposite) of the last 3 rules, and the 1st as-is (d
 
 
 ## PROGRAM:
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -329,13 +330,15 @@ void decryptByPlayfairCipher(char str[], char key[]) {
 int main() {
     char str[SIZE], key[SIZE];
 
-    // Key to be used
-    strcpy(key, "SAVEETHA");
-    printf("Key text: %s\n", key);
+    // Prompt user for the key
+    printf("Enter the key text: ");
+    fgets(key, SIZE, stdin);
+    key[strcspn(key, "\n")] = '\0';  // Remove trailing newline
 
-    // Plaintext to be encrypted
-    strcpy(str, "SISHANTH");
-    printf("Plain text: %s\n", str);
+    // Prompt user for the plaintext
+    printf("Enter the plain text: ");
+    fgets(str, SIZE, stdin);
+    str[strcspn(str, "\n")] = '\0';  // Remove trailing newline
 
     // Encrypt using Playfair Cipher
     encryptByPlayfairCipher(str, key);
@@ -344,17 +347,15 @@ int main() {
     // Decrypt using Playfair Cipher
     decryptByPlayfairCipher(str, key);
     printf("Decrypted text: %s\n", str);
-
+    
     return 0;
 }
 ```
 
-
-
-
 ## OUTPUT:
 
-![2](https://github.com/user-attachments/assets/6c3ba944-33d2-4cb1-953f-ada2cf924f38)
+
+![2](https://github.com/user-attachments/assets/de9c0481-6f6a-4a66-b6b1-8f7feb019388)
 
 
 ## RESULT:
