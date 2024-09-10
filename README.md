@@ -667,7 +667,7 @@ void encryptRailFence(char *text, int key, char *cipherText) {
     int row, col, direction;
     char rail[key][len];
 
-    // Initializing the rail matrix with null characters
+    // Initializing the rail matrix with newline characters
     for (row = 0; row < key; row++)
         for (col = 0; col < len; col++)
             rail[row][col] = '\n';
@@ -701,7 +701,7 @@ void decryptRailFence(char *cipherText, int key, char *plainText) {
     int row, col, direction;
     char rail[key][len];
 
-    // Initializing the rail matrix with null characters
+    // Initializing the rail matrix with newline characters
     for (row = 0; row < key; row++)
         for (col = 0; col < len; col++)
             rail[row][col] = '\n';
@@ -748,7 +748,9 @@ int main() {
 
     // Input the plain text
     printf("Enter the plain text: ");
-    gets(text);
+    fgets(text, sizeof(text), stdin);
+    // Remove the newline character added by fgets
+    text[strcspn(text, "\n")] = '\0';
 
     // Input the key (number of rails)
     printf("Enter the key (number of rails): ");
